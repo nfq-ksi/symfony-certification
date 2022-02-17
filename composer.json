@@ -1,0 +1,13 @@
+{
+    "name": "nfq/ksi-certificaton",
+    "type": "project",
+    "license": "MIT",
+    "description": "An dockerized environment for preparing for symfony certification",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.1.2",
+        "ext-ctype": "*",
+        "ext-iconv": "*"
+    }
+}
