@@ -2,6 +2,7 @@
 
 require '../Bootstrap.php';
 
+use Symfony\Component\Asset\Context\RequestStackContext;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Asset\PathPackage;
@@ -9,11 +10,9 @@ use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 use Symfony\Component\Asset\VersionStrategy\StaticVersionStrategy;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use SymfonyCertification\Asset\VersionStrategy\DateVersionStrategy;
-
-function echo_with_eol(string $string) {
-    echo $string . '</br>';
-}
 
 $package = new Package(new EmptyVersionStrategy());
 
@@ -148,5 +147,22 @@ $strictMode = true;
 // assumes the JSON file above is called "rev-manifest.json"
 $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/rev-manifest.json', strictMode: $strictMode));
 
-echo $package->getUrl('not-found.css');
-// error:
+//echo $package->getUrl('not-found.css');
+//// error:
+
+$request = Request::createFromGlobals();
+$requestStack = new RequestStack();
+$requestStack->push($request);
+
+$pathPackage = new PathPackage(
+    '/static/images',
+    new StaticVersionStrategy('v1'),
+    new RequestStackContext($requestStack)
+);
+
+echo_with_eol($pathPackage->getUrl('logo.png'));
+// result: /asset/static/images/logo.png?v1
+
+// Both "base path" and "base url" are ignored when using absolute path for asset
+echo_with_eol($pathPackage->getUrl('/logo.png'));
+// result: /logo.png?v1
