@@ -106,8 +106,8 @@ RUN set -eux; \
 	mkdir -p var/cache var/log; \
 	composer install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
-	composer symfony:dump-env prod; \
-	composer run-script --no-dev post-install-cmd; \
+#	composer symfony:dump-env prod; \
+#	composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync
 VOLUME /srv/app/var
 
