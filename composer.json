@@ -8,6 +8,7 @@
     "require": {
         "php": ">=8.1.2",
         "ext-ctype": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "symfony/cache": "^6.0"
     }
 }
