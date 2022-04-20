@@ -5,9 +5,16 @@
     "description": "An dockerized environment for preparing for symfony certification",
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "autoload": {
+        "psr-0": {
+            "SymfonyCertification\\": "src"
+        }
+    },
     "require": {
         "php": ">=8.1.2",
         "ext-ctype": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "symfony/asset": "^6.0",
+        "symfony/http-foundation": "^6.0"
     }
 }
